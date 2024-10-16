@@ -1,6 +1,6 @@
 # Kolocash
 
-## Compilation des contrat
+## Compilation des contrats
 
 ```shell
 $ npx hardhat compile
@@ -20,7 +20,11 @@ Exemple avec le contrat Kolocash :
 
 ```shell
 $ npx hardhat ignition deploy ignition/modules/Kolocash.js --network localhost
+```
 
+Si tout s'est bien passé, vous devriez avoir quelque chose qui ressemble à ça :
+
+```shell
 Hardhat Ignition 🚀
 
 Resuming existing deployment from ./ignition/deployments/chain-31337
