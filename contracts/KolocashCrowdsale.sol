@@ -18,12 +18,13 @@ contract KolocashCrowdsale is Ownable, ReentrancyGuard {
     event TokensPurchased(address indexed purchaser, uint amount, uint cost);
 
     // constructor(uint256 _rate, address _wallet, IERC20 _token)
-    constructor(
-        address _wallet
-    )
-        Ownable(_wallet) // Passer l'adresse du propriétaire initial au constructeur d'Ownable
+    constructor()
+        Ownable(msg.sender) // Passer l'adresse du propriétaire initial au constructeur d'Ownable
     {
-        require(_wallet != address(0), "Crowdsale: wallet is the zero address");
+        require(
+            msg.sender != address(0),
+            "Crowdsale: wallet is the zero address"
+        );
         // require(_rate > 0, "Crowdsale: rate is 0");
         // require(address(_token) != address(0), "Crowdsale: token is the zero address");
 

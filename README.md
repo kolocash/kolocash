@@ -1,13 +1,23 @@
-# Sample Hardhat Project
+# Kolocash
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
-
-Try running some of the following tasks:
+## Compilation des contrat
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
+npx hardhat compile
+```
+
+## Démarrage de la blockchain locale
+
+```shell
 npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
+```
+
+Le démarrage se fait sur `http://localhost:8545`
+
+## Déploiement d'un contrat sur la blockchain de Hardhat
+
+Exemple avec le contrat Kolocash :
+
+```shell
+npx hardhat ignition deploy ignition/modules/Kolocash.js --network localhost
 ```
