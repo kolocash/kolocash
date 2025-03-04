@@ -1,4 +1,4 @@
-# Whitepaper - KOLOCASHCASH ($KOLO)
+# KOLOCASH ($KOLO) - Whitepaper
 
 ## 1. Introduction
 
