@@ -30,6 +30,7 @@ contract Kolocash is ERC20, ERC20Burnable, Ownable {
     address public daoKoloContract;
 
     /// @notice Total tax rate applied to transactions (4%)
+    // (Much lower than Trump's 25% tax rate ^^)
     uint256 public taxRate = 4;
 
     /// @notice Events for transaction transparency
