@@ -53,7 +53,7 @@ npx hardhat run scripts/script.js --network localhost
 
 Avec le fichier `script.js` qui contient le code nécessaire au déploiement.
 
-Exemple le contrat `Lock.sol` :
+Exemple avec le contrat `Lock.sol` :
 
 ```javascript
 // We require the Hardhat Runtime Environment explicitly here. This is optional
