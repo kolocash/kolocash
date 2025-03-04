@@ -4,7 +4,7 @@ pragma solidity 0.8.28;
 /**
  * @title Kolocash ($KOLO) - Sovereign currency for Africa and its diaspora (Upgradeable)
  * @notice This is an upgradeable ERC20 token with burn, pausable, permit, flash mint capabilities,
- *         and a tax mechanism on transfers.
+ *         access management, and a tax mechanism on transfers.
  * @dev Uses AccessManagedUpgradeable for access control.
  */
 
@@ -27,7 +27,6 @@ contract Kolocash is
 {
     // 100 billion KOLO tokens (with 18 decimals)
     uint256 public initialSupply;
-
     // Tax rate (e.g., 4% total tax on transfers)
     uint256 public taxRate;
 
@@ -92,13 +91,13 @@ contract Kolocash is
         taxRate = 4; // 4% tax rate
         initialSupply = 100_000_000_000 * 10 ** 18; // 100 billion KOLO tokens
 
-        // Mint the initial supply to the initial authority
-        _mint(initialAuthority, initialSupply);
+        // Mint the initial supply to the initial authority (msg.sender)
+        _mint(msg.sender, initialSupply);
     }
 
     /**
      * @notice Allows the DAO to update wallet addresses.
-     * @dev Restricted to addresses with the "restricted" role (as defined in AccessManagedUpgradeable).
+     * @dev Restricted to addresses with the "restricted" role (defined in AccessManagedUpgradeable).
      */
     function updateWallets(
         address _treasury,
@@ -149,15 +148,40 @@ contract Kolocash is
     }
 
     /**
-     * @notice Overrides the internal _transfer to apply a tax on each transfer.
-     * @dev Tax is distributed as follows: 25% burned, 25% to liquidity, 25% to impact.
-     *      The remaining 25% (if any) is not explicitly allocated (depending on the calculation, adjust as needed).
+     * @notice Overrides the transfer function to apply a tax on each transfer.
      */
-    function _transfer(
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) public virtual override returns (bool) {
+        _transferWithTax(_msgSender(), recipient, amount);
+        return true;
+    }
+
+    /**
+     * @notice Overrides the transferFrom function to apply a tax on each transfer.
+     */
+    function transferFrom(
         address sender,
         address recipient,
         uint256 amount
-    ) internal override(ERC20Upgradeable) whenNotPaused {
+    ) public virtual override returns (bool) {
+        _spendAllowance(sender, _msgSender(), amount);
+        _transferWithTax(sender, recipient, amount);
+        return true;
+    }
+
+    /**
+     * @dev Internal function that applies the tax mechanism and executes transfers.
+     * @param sender The address sending tokens.
+     * @param recipient The address receiving tokens.
+     * @param amount The total amount of tokens to transfer.
+     */
+    function _transferWithTax(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) internal whenNotPaused {
         uint256 taxAmount = (amount * taxRate) / 100;
         uint256 burnAmount = taxAmount / 4;
         uint256 liquidityAmount = taxAmount / 4;
@@ -177,6 +201,8 @@ contract Kolocash is
         emit TaxDistributed(liquidityAmount, liquidityWallet);
         emit TaxDistributed(impactAmount, impactWallet);
     }
+
+    // The following functions are overrides required by Solidity.
 
     function _update(
         address from,
