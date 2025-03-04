@@ -1,95 +1,20 @@
 # Kolocash
 
-## Compilation des contrats
+The Kolocash ($KOLO) Smart Contract is designed to establish a sovereign digital currency for Africa and its diaspora, ensuring financial independence and economic integration. Built on the Polygon blockchain, KOLO incorporates mechanisms to manage liquidity, fund development projects, and enhance financial transparency.
 
-```shell
-$ npx hardhat compile
-```
+The contract defines a total supply of 100 billion KOLOs, which is minted at deployment. It implements a 4% transaction tax, distributed across different purposes:
 
-## Démarrage de la blockchain locale
+- 1% is allocated to liquidity, ensuring price stability and reducing volatility on decentralized exchanges (DEXs).
+- 1% is burned, gradually reducing the token supply to create scarcity and support long-term value.
+- 1% is allocated to the impact wallet, which funds microfinance, infrastructure, education, and intra-African trade initiatives.
+- 1% is managed through the treasury wallet, supporting ongoing project development.
 
-```shell
-$ npx hardhat node
-```
+To ensure decentralized governance, KOLO implements a DAO-controlled fund management system. The contract initially assigns the treasury, liquidity, and impact wallets, but these can only be updated by a designated DAO smart contract. This guarantees that future changes in fund allocation will be decided by the KOLO community rather than a centralized entity.
 
-Le démarrage se fait sur `http://localhost:8545`
+Transparency is reinforced through event logging, where all key financial actions—including tax distributions and token burns—are recorded on-chain, allowing users to track transactions in real-time. Furthermore, the contract enables the retrieval of wallet balances for auditability.
 
-## Déploiement d'un contrat sur la blockchain de Hardhat
+By combining governance decentralization, transparent taxation, and token burning, KOLOCASH ensures long-term economic stability and community-driven financial control, making it a foundational tool for African economic empowerment.
 
-Exemple avec le contrat Kolocash :
+## Technical
 
-```shell
-$ npx hardhat ignition deploy ignition/modules/Kolocash.js --network localhost
-```
-
-Si tout s'est bien passé, vous devriez avoir quelque chose qui ressemble à ça :
-
-```shell
-Hardhat Ignition 🚀
-
-Resuming existing deployment from ./ignition/deployments/chain-31337
-
-Deploying [ KolocashCrowdsaleModule ]
-
-Warning - previously executed futures are not in the module:
- - KolocashModule#Kolocash
-
-Batch #1
-  Executed KolocashCrowdsaleModule#KolocashCrowdsale
-
-[ KolocashCrowdsaleModule ] successfully deployed 🚀
-
-Deployed Addresses
-
-KolocashModule#Kolocash - 0x5FbDB2315678afecb367f032d93F642f64180aa3
-KolocashCrowdsaleModule#KolocashCrowdsale - 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-```
-
-Déploiement avec l'ancienne version (script) :
-
-```shell
-npx hardhat run scripts/script.js --network localhost
-```
-
-Avec le fichier `script.js` qui contient le code nécessaire au déploiement.
-
-Exemple avec le contrat `Lock.sol` :
-
-```javascript
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// Run COMMAND : npx hardhat run scripts/script.js --network localhost
-
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-
-const hre = require("hardhat");
-
-async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = hre.ethers.parseEther("0.001");
-
-  const lock = await hre.ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
-}
-
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
-```
+[See more](TECH.md)
