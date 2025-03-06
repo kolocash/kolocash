@@ -81,7 +81,7 @@ contract Kolocash is
                 _impact != address(0),
             "Invalid wallet address"
         );
-        require(_daoKolo != address(0), "Invalid KOLO DAO address");
+        require(_daoKolo != address(0), "Invalid DAO address");
 
         treasuryWallet = _treasury;
         liquidityWallet = _liquidity;
@@ -91,7 +91,7 @@ contract Kolocash is
         taxRate = 4; // 4% tax rate
         initialSupply = 100_000_000_000 * 10 ** 18; // 100 billion KOLO tokens
 
-        // Mint the initial supply to the initial authority (msg.sender)
+        // Mint the initial supply to the deployer (msg.sender)
         _mint(msg.sender, initialSupply);
     }
 
@@ -202,8 +202,9 @@ contract Kolocash is
         emit TaxDistributed(impactAmount, impactWallet);
     }
 
-    // The following functions are overrides required by Solidity.
-
+    /**
+     * @notice Overrides _update to resolve conflicts between ERC20Upgradeable and ERC20PausableUpgradeable.
+     */
     function _update(
         address from,
         address to,
