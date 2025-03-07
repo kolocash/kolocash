@@ -1,5 +1,10 @@
 # KOLOCASH Smart contract
 
+## Address
+
+- KoloCash : `0xE28b99E2a7D4456a67d42bd9b8D27e47D8d0e2b2`
+- KoloDao : `0xd50FF476888CA70be0359fFfaF47583545170E06`
+
 ## Compilation des contrats
 
 ```shell
