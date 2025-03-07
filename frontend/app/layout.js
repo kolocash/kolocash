@@ -1,6 +1,6 @@
 import RainbowKitAndWagmiProvider from "./wagmi";
 import Head from "next/head";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import Layout from "@/components/shared/Layout";
 
 import "./globals.css";
