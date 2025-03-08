@@ -1,31 +1,27 @@
-// app/page.js
-import KolocashBalance from "../components/KolocashBalance";
-// import TransferTokens from "../components/TransferTokens";
+"use client";
+
+import KolocashBalance from "@/components/KolocashBalance";
+import TransferTokens from "@/components/TransferTokens";
 
 export default function Home() {
   return (
-    <div className="space-y-12">
-      {/* Message de bienvenue */}
-      <section className="bg-gray-800 bg-opacity-75 rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4">Bienvenue sur Kolocash</h1>
-        <p className="text-lg">
-          Kolocash est la monnaie crypto dédiée à l'Afrique et sa diaspora.
-          Gérez vos tokens KOLO, transférez-les et suivez votre solde en temps
-          réel.
-        </p>
-      </section>
-
-      {/* Affichage du solde KOLO */}
-      <section className="bg-gray-800 bg-opacity-75 rounded-lg shadow-lg p-6 max-w-md mx-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-4">Votre Solde KOLO</h2>
         <KolocashBalance />
-      </section>
+      </div>
 
-      {/* Formulaire de transfert de tokens */}
-      <section className="bg-gray-800 bg-opacity-75 rounded-lg shadow-lg p-6 max-w-md mx-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-4">Transférer des Tokens</h2>
-        {/* <TransferTokens /> */}
-      </section>
+        <TransferTokens />
+      </div>
+
+      <div className="col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h2 className="text-xl font-semibold mb-4">Activité Récente</h2>
+        <p className="text-gray-600 dark:text-gray-300">
+          Par exemple, l'historique des transactions, la gouvernance DAO, etc.
+        </p>
+      </div>
     </div>
   );
 }

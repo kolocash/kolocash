@@ -1,19 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-export default function Header() {
+export default function Header({ darkMode, onToggleDarkMode }) {
     return (
-        <header className="dark:bg-gray-900 shadow-sm sm:text-center">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col items-baseline justify-end md:flex-row md:items-center md:justify-end py-4 md:py-2">
-                    {/* Connect Wallet Button */}
-                    <div className="flex-shrink-0">
-                        <ConnectButton />
-                    </div>
-                </div>
-            </div>
+        <header className="bg-kolo-500 dark:bg-kolo-700 text-white px-6 py-4 shadow flex items-center justify-between">
+            {/* Logo ou titre */}
+            <Link href="/">
+                <h1 className="text-xl font-semibold">Kolocash</h1>
+            </Link>
+
+            {/* Bouton de bascule dark mode */}
+            <button
+                onClick={onToggleDarkMode}
+                className="bg-white/20 hover:bg-white/30 px-3 py-1 rounded transition-colors text-sm"
+            >
+                {darkMode ? "Mode Clair" : "Mode Sombre"}
+            </button>
         </header>
     );
 }

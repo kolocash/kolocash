@@ -1,12 +1,12 @@
 "use client";
-import { useContractRead, useAccount } from "wagmi";
+import { useReadContract, useAccount } from "wagmi";
 import { KOLOCASH_ADDRESS, KOLOCASH_ABI } from "@/constants";
-import { ethers } from "ethers";
+import { formatUnits } from "ethers";
 
 export default function KolocashBalance() {
     const { address, isConnected } = useAccount();
 
-    const { data, isError, isLoading } = useContractRead({
+    const { data, isError, isLoading } = useReadContract({
         address: KOLOCASH_ADDRESS,
         abi: KOLOCASH_ABI,
         functionName: "balanceOf",
@@ -26,8 +26,8 @@ export default function KolocashBalance() {
         return <p className="text-center text-red-500">Erreur lors de la récupération du solde.</p>;
     }
 
-    // Convertir le solde (BigNumber) en format lisible (en KOLO, avec 18 décimales)
-    const balanceFormatted = data ? ethers.utils.formatUnits(data, 18) : "0";
+    // Utilisation de formatUnits importé directement depuis ethers (compatible avec v6)
+    const balanceFormatted = data ? formatUnits(data, 18) : "0";
 
     return (
         <div className="text-center">

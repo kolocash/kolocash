@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useAccount, usePrepareContractWrite, useContractWrite } from "wagmi";
+import { useAccount, useWriteContract } from "wagmi";
 import { KOLOCASH_ADDRESS, KOLOCASH_ABI } from "@/constants";
 
 export default function TransferTokens() {
@@ -8,16 +8,14 @@ export default function TransferTokens() {
     const [recipient, setRecipient] = useState("");
     const [amount, setAmount] = useState("");
 
-    // Préparation de l'appel à la fonction "transfer"
-    const { config, error: prepareError } = usePrepareContractWrite({
+    // Utilisation de useWriteContract en passant la config directement
+    const { data, error, isLoading, write } = useWriteContract({
         address: KOLOCASH_ADDRESS,
         abi: KOLOCASH_ABI,
         functionName: "transfer",
         args: [recipient, amount],
         enabled: isConnected && recipient !== "" && amount !== "",
     });
-
-    const { data, error, isLoading, write } = useContractWrite(config);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,13 +25,19 @@ export default function TransferTokens() {
     };
 
     if (!isConnected) {
-        return <p className="text-center">Veuillez connecter votre portefeuille pour transférer des tokens.</p>;
+        return (
+            <p className="text-center">
+                Veuillez connecter votre portefeuille pour transférer des tokens.
+            </p>
+        );
     }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-                <label className="block text-sm font-medium">Adresse du destinataire</label>
+                <label className="block text-sm font-medium">
+                    Adresse du destinataire
+                </label>
                 <input
                     type="text"
                     value={recipient}
@@ -44,7 +48,9 @@ export default function TransferTokens() {
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium">Montant à transférer (en wei)</label>
+                <label className="block text-sm font-medium">
+                    Montant à transférer (en wei)
+                </label>
                 <input
                     type="number"
                     value={amount}
@@ -54,11 +60,6 @@ export default function TransferTokens() {
                     required
                 />
             </div>
-            {prepareError && (
-                <p className="text-sm text-red-500">
-                    Erreur de préparation : {prepareError.message}
-                </p>
-            )}
             {error && (
                 <p className="text-sm text-red-500">
                     Erreur de transaction : {error.message}
