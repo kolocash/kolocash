@@ -189,7 +189,9 @@ contract Kolocash is
         uint256 finalAmount = amount - taxAmount;
 
         // Burn tokens by transferring them to the zero address
-        super._transfer(sender, address(0), burnAmount);
+        // super._transfer(sender, address(0), burnAmount);
+        _burn(sender, burnAmount);
+
         // Transfer portion to the liquidity wallet
         super._transfer(sender, liquidityWallet, liquidityAmount);
         // Transfer portion to the impact wallet

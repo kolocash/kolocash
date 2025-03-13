@@ -22,6 +22,10 @@ module.exports = {
     enabled: true,
   },
   networks: {
+    localhost: {
+      accounts: [vars.get("TEST_PK")],
+      url: "http://127.0.0.1:8545",
+    },
     amoy: {
       url: `https://polygon-amoy.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [vars.get("TEST_PK")],
