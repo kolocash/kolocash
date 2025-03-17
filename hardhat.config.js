@@ -8,7 +8,7 @@ const POLYGONSCAN_API_KEY = vars.get("POLYGONSCAN_API_KEY");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.28",
+  solidity: "0.8.29",
   settings: {
     optimizer: {
       enabled: true,
