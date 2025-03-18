@@ -91,8 +91,8 @@ contract Kolocash is
         taxRate = 4; // 4% tax rate
         initialSupply = 100_000_000_000 * 10 ** 18; // 100 billion KOLO tokens
 
-        // Mint the initial supply to the deployer (msg.sender)
-        _mint(msg.sender, initialSupply);
+        // Mint the initial supply to the contract itself
+        _mint(address(this), initialSupply);
     }
 
     /**

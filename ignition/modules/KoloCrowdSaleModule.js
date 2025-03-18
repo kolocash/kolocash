@@ -1,22 +1,25 @@
 const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
+const { parseUnits } = require("ethers");
 
-const KOLOCASH_TOKEN_ADDRESS = "0x1ACcBD355245AbA93CE46D33ab1D0152CE33Fd00";
+const KOLOCASH_TOKEN_ADDRESS = "0xE28b99E2a7D4456a67d42bd9b8D27e47D8d0e2b2";
+const AMOUNT_TO_TRANSFER = parseUnits("100000000", 18); // 100M KOLO
 
 module.exports = buildModule("KoloCrowdSaleModule", (m) => {
-  const kolocashTokenAddress = m.getParameter(
-    "kolocashTokenAddress",
-    KOLOCASH_TOKEN_ADDRESS
-  );
+  // Chargement du contrat Kolocash
+  // const kolocashToken = m.contractAt("Kolocash", KOLOCASH_TOKEN_ADDRESS);
 
-  const koloCrowdSale = m.contract("KoloCrowdSale", [kolocashTokenAddress]);
+  // Déploiement du contrat KoloCrowdSale
+  const koloCrowdSale = m.contract("KoloCrowdSale", [KOLOCASH_TOKEN_ADDRESS]);
+
+  // // Étape 1 : Approve
+  // m.call(kolocashToken, "approve", [koloCrowdSale, AMOUNT_TO_TRANSFER]);
+
+  // // Étape 2 : Transfert depuis l’owner vers le crowdsale
+  // m.call(kolocashToken, "transferFrom", [
+  //   m.getAccount(0), // le déployeur par défaut
+  //   koloCrowdSale,
+  //   AMOUNT_TO_TRANSFER,
+  // ]);
 
   return { koloCrowdSale };
 });
-
-// npx hardhat ignition deploy ignition/modules/KoloCrowdSaleModule.js --network localhost
-
-// npx hardhat ignition deploy ignition/modules/KoloCrowdSaleModule.js --network amoy
-
-// npx hardhat ignition deploy ignition/modules/KoloCrowdSaleModule.js --network polygon
-
-// npx hardhat verify --network amoy 0xd50FF476888CA70be0359fFfaF47583545170E06 0x1ACcBD355245AbA93CE46D33ab1D0152CE33Fd00
