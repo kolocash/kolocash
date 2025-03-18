@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.29;
+pragma solidity ^0.8.28;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "./Authorizable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title KoloCrowdSale
  * @dev Contrat de vente de tokens KOLO contre POL sur le réseau Polygon.
  */
-contract KoloCrowdSale is Authorizable, ReentrancyGuard {
+contract KoloCrowdSale is Ownable, ReentrancyGuard {
     IERC20 public kolocashToken; // Adresse du token KOLO
-    uint256 public rate = 20 * 10 ** 18; // Taux de conversion (1 POL = 20 KOLO => 1 KOLO = 0.01 EUR)
+    uint256 public rate = 20 * 10 ** 18; // Taux de conversion (1 POL = 20 KOLO)
     uint256 public polygonRaised; // Montant total collecté en POL
 
     /**
@@ -30,7 +30,7 @@ contract KoloCrowdSale is Authorizable, ReentrancyGuard {
      * @dev Constructeur du contrat.
      * @param _kolocashToken Adresse du contrat du token KOLO
      */
-    constructor(IERC20 _kolocashToken) {
+    constructor(IERC20 _kolocashToken) Ownable(msg.sender) {
         require(
             address(_kolocashToken) != address(0),
             "Adresse du token invalide"
@@ -43,7 +43,7 @@ contract KoloCrowdSale is Authorizable, ReentrancyGuard {
      * @dev Met à jour le taux de conversion.
      * @param _newRate Le nouveau taux de conversion (nombre de KOLO par POL)
      */
-    function setRate(uint256 _newRate) external onlyAuthorized {
+    function setRate(uint256 _newRate) external onlyOwner {
         require(_newRate > 0, "Le nouveau taux doit etre superieur a zero");
         rate = _newRate;
     }
@@ -90,7 +90,7 @@ contract KoloCrowdSale is Authorizable, ReentrancyGuard {
     /**
      * @dev Retrait des tokens non vendus par le propriétaire.
      */
-    function withdrawTokens() external onlyAuthorized {
+    function withdrawTokens() external onlyOwner {
         uint256 remainingTokens = kolocashToken.balanceOf(address(this));
         require(remainingTokens > 0, "Aucun token a retirer");
 
