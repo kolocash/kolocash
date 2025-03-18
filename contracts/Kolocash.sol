@@ -32,21 +32,16 @@ contract Kolocash is
 
     /**
      * @notice Initializes the KOLO token.
-     * @param recipient Address receiving the initial supply (usually the treasury or ICO wallet).
-     * @param initialOwner Owner address that controls minting, pausing, etc.
      */
-    function initialize(
-        address recipient,
-        address initialOwner
-    ) public initializer {
+    function initialize() public initializer {
         __ERC20_init("Kolocash", "KOLO");
         __ERC20Burnable_init();
         __ERC20Pausable_init();
-        __Ownable_init(initialOwner);
+        __Ownable_init(msg.sender);
         __ERC20Permit_init("Kolocash");
 
         // Mint the full supply (100B KOLO with 18 decimals) to the treasury wallet
-        _mint(recipient, 100_000_000_000 * 10 ** decimals());
+        _mint(msg.sender, 100_000_000_000 * 10 ** decimals());
     }
 
     /**
