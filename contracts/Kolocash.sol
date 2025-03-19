@@ -41,7 +41,8 @@ contract Kolocash is
         __ERC20Permit_init("Kolocash");
 
         // Mint the full supply (100B KOLO with 18 decimals) to the treasury wallet
-        _mint(msg.sender, 100_000_000_000 * 10 ** decimals());
+        // _mint(msg.sender, 100_000_000_000 * 10 ** decimals());
+        _mint(address(this), 100_000_000_000 * 10 ** decimals());
     }
 
     /**
