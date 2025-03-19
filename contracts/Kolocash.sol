@@ -46,6 +46,22 @@ contract Kolocash is
     }
 
     /**
+     * @notice Transfers tokens from the caller to a specified address.
+     * @param _recipient Address that will receive the tokens.
+     * @param _amount Number of tokens to transfer (in wei).
+     */
+    function transferTokens(
+        address _recipient,
+        uint256 _amount
+    ) external onlyOwner {
+        require(
+            balanceOf(address(this)) >= _amount,
+            "Solde insuffisant dans le contrat"
+        );
+        _transfer(address(this), _recipient, _amount);
+    }
+
+    /**
      * @notice Pauses all token transfers.
      * @dev Can only be triggered by the contract owner.
      */
