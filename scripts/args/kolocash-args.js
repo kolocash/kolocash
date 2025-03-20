@@ -1,18 +1,12 @@
 console.log("args/kolocash-args.js");
 const { vars } = require("hardhat/config");
 
-const treasuryWallet = vars.get("TREASURY_ADDRESS") || "0x";
+// Liquidity and Impact Wallet
 const liquidityWallet = vars.get("LIQUIDITY_ADDRESS") || "0x";
 const impactWallet = vars.get("IMPACT_ADDRESS") || "0x";
-const daoKoloContract = vars.get("DAO_ADDRESS") || "0x";
 
 console.log(
-  `treasuryWallet: ${treasuryWallet}, liquidityWallet: ${liquidityWallet}, impactWallet: ${impactWallet}, daoKoloContract: ${daoKoloContract}`
+  `liquidityWallet: ${liquidityWallet}, impactWallet: ${impactWallet}`
 );
 
-module.exports = [
-  treasuryWallet,
-  liquidityWallet,
-  impactWallet,
-  daoKoloContract,
-];
+module.exports = [liquidityWallet, impactWallet];
