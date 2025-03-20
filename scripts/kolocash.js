@@ -1,23 +1,25 @@
 const { ethers, upgrades } = require("hardhat");
 
+const { vars } = require("hardhat/config");
+
+// Liquidity and Impact Wallet
+const liquidityWallet = vars.get("LIQUIDITY_ADDRESS") || "0x";
+const impactWallet = vars.get("IMPACT_ADDRESS") || "0x";
+
 async function main() {
   // Déploiement du contrat Kolocash
   const Kolocash = await ethers.getContractFactory("Kolocash");
   console.log("Déploiement de Kolocash...");
-  const kolocash = await upgrades.deployProxy(Kolocash, [], {
-    initializer: "initialize",
-  });
+  const kolocash = await upgrades.deployProxy(
+    Kolocash,
+    [liquidityWallet, impactWallet],
+    {
+      initializer: "initialize",
+    }
+  );
   await kolocash.waitForDeployment();
   const kolocashAddress = await kolocash.getAddress();
   console.log("Kolocash déployé à :", kolocashAddress);
-
-  // Déploiement du contrat KoloCrowdSale
-  // const KoloCrowdSale = await ethers.getContractFactory("KoloCrowdSale");
-  // console.log("Déploiement de KoloCrowdSale...");
-  // const koloCrowdSale = await KoloCrowdSale.deploy(kolocashAddress);
-  // await koloCrowdSale.waitForDeployment();
-  // const koloCrowdSaleAddress = await koloCrowdSale.getAddress();
-  // console.log("KoloCrowdSale déployé à :", koloCrowdSaleAddress);
 }
 
 main().catch((error) => {

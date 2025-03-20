@@ -27,8 +27,8 @@ contract Kolocash is
     ERC20Upgradeable,
     ERC20BurnableUpgradeable,
     ERC20PausableUpgradeable,
-    ERC20PermitUpgradeable,
-    OwnableUpgradeable
+    OwnableUpgradeable,
+    ERC20PermitUpgradeable
 {
     // Tax parameters
     bool public taxEnabled;
