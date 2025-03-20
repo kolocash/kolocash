@@ -12,12 +12,12 @@ async function main() {
   console.log("Kolocash déployé à :", kolocashAddress);
 
   // Déploiement du contrat KoloCrowdSale
-  const KoloCrowdSale = await ethers.getContractFactory("KoloCrowdSale");
-  console.log("Déploiement de KoloCrowdSale...");
-  const koloCrowdSale = await KoloCrowdSale.deploy(kolocashAddress);
-  await koloCrowdSale.waitForDeployment();
-  const koloCrowdSaleAddress = await koloCrowdSale.getAddress();
-  console.log("KoloCrowdSale déployé à :", koloCrowdSaleAddress);
+  // const KoloCrowdSale = await ethers.getContractFactory("KoloCrowdSale");
+  // console.log("Déploiement de KoloCrowdSale...");
+  // const koloCrowdSale = await KoloCrowdSale.deploy(kolocashAddress);
+  // await koloCrowdSale.waitForDeployment();
+  // const koloCrowdSaleAddress = await koloCrowdSale.getAddress();
+  // console.log("KoloCrowdSale déployé à :", koloCrowdSaleAddress);
 }
 
 main().catch((error) => {
